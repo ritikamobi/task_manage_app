@@ -1,12 +1,12 @@
 namespace :reminder_mailer do
-  desc "TO SEND NOTIFICATION ON DEADLINE BREACH"
+  desc "TO SEND MAIL FOR TASK COMPLETION"
   task task_reminder: :environment do
 		puts "Process Started at : #{Time.now}"
-		# begin
+		begin
 			Task::send_reminder_mail()
-		# rescue Exception => ex
-		# 	puts "ERROR |--> #{ex.message}"
-		# end
+		rescue Exception => ex
+			puts "ERROR |--> #{ex.message}"
+		end
 		puts "Process ends at #{Time.now}"
 	end
 end

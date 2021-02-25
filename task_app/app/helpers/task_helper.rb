@@ -1,5 +1,4 @@
 module TaskHelper
-
 	def format_date_time(date)
     return date.strftime( "#{date.day.ordinalize} %b, %Y %H:%M:%S") if not date.blank?
   end
