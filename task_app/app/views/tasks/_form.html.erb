@@ -1,0 +1,73 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+         <div class="card card-primary">
+            <div class="card-header">
+               <h3 class="card-title"><small>Create Task</small></h3>
+            </div>
+            <%= form_for(@items, url: {action: @items.new_record? ? :create : :update}, :html => {id: "task-form", class: "form-horizontal"}) do |f| %>
+            <% if @items.errors.any? %>
+              <ul class="error_class">
+              <% @items.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            <% end %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <div class="card-body">
+               <div class="form-group">
+                  <%= f.label :task_title, class: "col-lg-4 control-label" %>
+                  <div class="col-lg-8">
+                     <%= f.text_field :title, class: "form-control", required: "required", readonly: f.object.persisted? %>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <%= f.label :status, class: "col-lg-4 control-label" %>
+                  <div class="col-lg-8">
+                    <%=select_tag "task[status]", options_for_select([['Backlog', 1], ['InProgress', 2], ['Completed', 3]], :selected => @items.status), {:class => 'form-control', style: 'text-transform: capitalize;' , :prompt => 'Select Status'}%>
+                  </div>
+               </div>
+               <%if  !f.object.persisted?%>
+                  <div class="form-group">
+                    <%= f.label :start_date, class: "col-lg-4 control-label" %>
+                    <div class="col-lg-8">
+                       <%= text_field_tag 'task[start_date]' %>
+                  </div>
+                 </div>
+                 <div class="form-group">
+                    <%= f.label :end_date, class: "col-lg-4 control-label" %>
+                    <div class="col-lg-8">
+                       <%= text_field_tag  'task[end_date]'%>
+                  </div>
+                 </div>
+               <%end%>
+               <div class="card-footer">
+                  <button type="submit" class="btn btn-primary sub_btn" >Submit</button>
+                  <%= link_to 'Cancel',tasks_path , class: "btn btn-w-m btn-info" %>
+               </div>
+               <%end%>
+            </div>
+         </div>
+         <div class="col-md-6">
+         </div>
+      </div>
+    </div>
+</section>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <script>
+      $('#task_start_date').datetimepicker({
+        dateFormat: "yy-mm-dd", 
+        timeFormat: "HH:mm:ss"
+      });
+       $('#task_end_date').datetimepicker({
+        dateFormat: "yy-mm-dd", 
+        timeFormat: "HH:mm:ss"
+      });
+    </script>

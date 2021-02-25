@@ -1,0 +1,6 @@
+development:
+  database: task_db
+  adapter: postgresql
+  host: localhost
+  username: postgres
+  password: postgres
